@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Everything an editor does in GoodDay: the daily standup, time off, and running a job through revisions.">
+<meta name="robots" content="noindex">
+<title>Planaria Editor Handbook</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✂️</text></svg>">
+<style>html,body{margin:0;padding:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Planaria Editor Handbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+
+<style>
+:root{
+  --ground:#F1F4F7; --surface:#FFFFFF; --surface-2:#F7F9FB;
+  --ink:#12171D; --ink-2:#3D4752; --muted:#69737F;
+  --rule:#DCE3EA; --rule-2:#EDF1F5;
+  --app-bg:#1D2430; --app-ink:#E4E9EF; --app-rule:#333D4C; --app-muted:#8794A4; --app-hover:#2A3341;
+  --ring:#12171D;
+  --s-todo:#28AEF0; --s-editing:#43C464; --s-internal:#FF841F; --s-final:#7F5AF2;
+  --s-creview:#DE35C1; --s-crevision:#FF6157; --s-done:#7C848F;
+  --ok:#1E874B; --warn:#B8571A; --stop:#C0342B;
+  --mark:#FFC93C; --mark-ink:#7A5600;
+  --maxw:74ch;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E1319; --surface:#161C24; --surface-2:#1B222B;
+    --ink:#E8EDF2; --ink-2:#BDC7D2; --muted:#8B97A4;
+    --rule:#28313C; --rule-2:#202832;
+    --app-bg:#10161E; --app-ink:#DDE4EB; --app-rule:#2B3542; --app-muted:#7D8A99; --app-hover:#1B242F;
+    --ring:#E8EDF2; --ok:#4FC183; --warn:#E9974A; --stop:#F0736A;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E1319; --surface:#161C24; --surface-2:#1B222B;
+  --ink:#E8EDF2; --ink-2:#BDC7D2; --muted:#8B97A4;
+  --rule:#28313C; --rule-2:#202832;
+  --app-bg:#10161E; --app-ink:#DDE4EB; --app-rule:#2B3542; --app-muted:#7D8A99; --app-hover:#1B242F;
+  --ring:#E8EDF2; --ok:#4FC183; --warn:#E9974A; --stop:#F0736A;
+}
+
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:"Archivo",system-ui,sans-serif;letter-spacing:-0.021em;text-wrap:balance;margin:0}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace}
+
+.topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--ground) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+.topbar-in{max-width:1180px;margin:0 auto;padding:11px 22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:9px;font-family:"Archivo";font-weight:700;font-size:14px}
+.brand-mark{width:24px;height:24px;border-radius:6px;background:var(--ink);color:var(--ground);display:grid;place-items:center;font-size:11px;font-weight:700}
+.aud{margin-left:auto;font-family:"JetBrains Mono";font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--rule);border-radius:999px;padding:4px 11px}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px 90px;display:grid;grid-template-columns:210px minmax(0,1fr);gap:44px}
+@media (max-width:900px){.wrap{grid-template-columns:1fr;gap:0}}
+
+.sidenav{position:sticky;top:64px;align-self:start;padding-top:40px;font-size:13.5px}
+@media (max-width:900px){.sidenav{position:static;padding:20px 0 0;border-bottom:1px solid var(--rule);margin-bottom:8px}}
+.sidenav .lbl{font-family:"JetBrains Mono";font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+.sidenav ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:1px}
+@media (max-width:900px){.sidenav ol{flex-direction:row;flex-wrap:wrap;gap:6px}}
+.sidenav a{display:block;color:var(--ink-2);text-decoration:none;padding:6px 10px;border-radius:7px}
+@media (max-width:900px){.sidenav a{border:1px solid var(--rule);font-size:12.5px;padding:4px 9px}}
+.sidenav a:hover{background:var(--surface);color:var(--ink)}
+.sidenav a:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+
+main{padding-top:40px;min-width:0}
+.eyebrow{font-family:"JetBrains Mono";font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+h1{font-size:clamp(29px,5vw,42px);line-height:1.08;font-weight:700;margin-bottom:14px}
+.standfirst{font-size:18px;color:var(--ink-2);max-width:58ch;margin:0 0 28px}
+
+.track-wrap{margin:0 0 40px}
+.track-cap{font-family:"JetBrains Mono";font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+.track{display:flex;gap:3px;overflow-x:auto;background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:12px}
+.clip{flex:0 0 auto;border-radius:6px;padding:9px 12px 10px;min-width:104px;border:1px solid var(--rule-2);background:var(--surface-2);position:relative}
+.clip::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px;background:var(--c)}
+.clip .n{font-family:"JetBrains Mono";font-size:9.5px;color:var(--muted);display:block;margin-bottom:3px}
+.clip .t{font-family:"Archivo";font-weight:600;font-size:11.5px;line-height:1.25;display:block}
+.clip .who{font-size:10.5px;color:var(--muted);display:block;margin-top:4px}
+.clip.you{background:color-mix(in srgb,var(--c) 13%,var(--surface));border-color:color-mix(in srgb,var(--c) 40%,var(--rule))}
+
+section{margin:0 0 50px;scroll-margin-top:74px}
+.sec-head{display:flex;align-items:baseline;gap:12px;margin:0 0 18px;padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.sec-num{font-family:"JetBrains Mono";font-size:11px;font-weight:700;color:var(--muted)}
+h2{font-size:25px;font-weight:700}
+p{margin:0 0 13px;max-width:var(--maxw)}
+ul,ol{margin:0 0 14px;padding-left:20px;max-width:var(--maxw)}
+li{margin-bottom:6px}
+strong{font-weight:600;color:var(--ink)}
+
+/* step */
+.step{margin:0 0 34px;padding-left:0}
+.step-h{display:flex;align-items:center;gap:12px;margin:0 0 12px}
+.step-n{font-family:"JetBrains Mono";font-size:12px;font-weight:700;width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:var(--ink);color:var(--ground);flex:0 0 auto}
+.step-h h3{font-size:18px;font-weight:600;margin:0}
+.step-body>:last-child{margin-bottom:0}
+
+.f{font-family:"JetBrains Mono";font-size:.86em;font-weight:500;background:var(--surface);border:1px solid var(--rule);border-radius:5px;padding:1.5px 6px;white-space:nowrap}
+.st{font-family:"JetBrains Mono";font-size:.78em;font-weight:700;letter-spacing:.04em;border-radius:4px;padding:2.5px 7px;white-space:nowrap;color:#fff;background:var(--c,#7C848F)}
+
+.note{border-left:3px solid var(--b,var(--rule));background:var(--surface);border-radius:0 10px 10px 0;padding:14px 17px;margin:0 0 18px;max-width:var(--maxw)}
+.note .lab{font-family:"JetBrains Mono";font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--b,var(--muted));font-weight:700;margin:0 0 5px;display:block}
+.note p:last-child{margin-bottom:0}
+.note.do{--b:var(--ok)} .note.dont{--b:var(--stop)} .note.watch{--b:var(--warn)}
+
+/* ---- screens ---- */
+figure{margin:0 0 16px;max-width:var(--maxw)}
+figcaption{font-size:12.8px;color:var(--muted);margin-top:8px;line-height:1.5}
+.shot{background:var(--app-bg);border:1px solid var(--app-rule);border-radius:11px;overflow:hidden;color:var(--app-ink);font-size:13.5px}
+.shot-bar{display:flex;align-items:center;gap:7px;padding:8px 13px;border-bottom:1px solid var(--app-rule);font-family:"JetBrains Mono";font-size:10.5px;color:var(--app-muted);letter-spacing:.04em}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--app-rule)}
+.shot-body{padding:13px 14px}
+.shot-split{display:grid;grid-template-columns:150px minmax(0,1fr)}
+@media(max-width:560px){.shot-split{grid-template-columns:1fr}}
+.shot-side{border-right:1px solid var(--app-rule);padding:11px 10px}
+@media(max-width:560px){.shot-side{border-right:0;border-bottom:1px solid var(--app-rule)}}
+
+.clickpin{margin-left:auto;font-family:"JetBrains Mono";font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mark-ink);background:var(--mark);border-radius:4px;padding:2px 7px;white-space:nowrap}
+.mk{background:color-mix(in srgb,var(--mark) 17%,transparent);outline:2px solid var(--mark);outline-offset:-2px;border-radius:7px}
+
+.navlab{font-family:"JetBrains Mono";font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--app-muted);margin:0 0 7px;padding:0 8px}
+.navitem{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:7px;font-size:13px;margin-bottom:2px}
+.navitem .gi{width:13px;height:13px;border-radius:3px;border:1.5px solid var(--app-muted);flex:0 0 auto}
+
+.tabs{display:flex;gap:2px;overflow-x:auto;padding:3px 0}
+.tab{padding:7px 11px;border-radius:7px;font-size:12.8px;white-space:nowrap;color:var(--app-muted);display:flex;align-items:center;gap:7px}
+.tab.on{color:var(--app-ink);font-weight:600}
+
+.rowset{display:flex;flex-direction:column;gap:1px}
+.row{display:grid;grid-template-columns:130px minmax(0,1fr);gap:10px;padding:8px 10px;border-radius:7px;align-items:center}
+@media(max-width:520px){.row{grid-template-columns:110px minmax(0,1fr)}}
+.row .k{color:var(--app-muted);font-size:12.4px}
+.row .v{font-weight:500;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+
+.field{border-bottom:1px solid var(--app-rule);padding:12px 10px}
+.field:last-child{border-bottom:0}
+.field .fl{font-weight:600;font-size:13.4px;margin:0 0 3px;display:flex;align-items:center;gap:8px}
+.field .fh{color:var(--app-muted);font-size:12.2px;line-height:1.5;margin:0 0 8px}
+.inputbox{border:1px solid var(--app-rule);border-radius:7px;padding:8px 11px;color:var(--app-muted);font-size:12.4px;background:color-mix(in srgb,#000 14%,transparent)}
+.inputbox.filled{color:var(--app-ink)}
+
+.picker{display:flex;flex-direction:column;gap:2px}
+.opt{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:6px;font-size:12.8px}
+.opt .sw{width:9px;height:9px;border-radius:2px;background:var(--c);flex:0 0 auto}
+.opt.dim{opacity:.4}
+
+.msg{background:var(--app-bg);border:1px solid var(--app-rule);border-radius:11px;padding:16px 17px;color:var(--app-ink)}
+.msg .h{font-family:"Archivo";font-weight:600;font-size:14.5px;margin:0 0 9px}
+.msg p{margin:0 0 9px;font-size:13.6px;line-height:1.58;color:var(--app-ink);max-width:none}
+.msg p:last-child{margin-bottom:0}
+.msg .b{font-weight:700}
+.msg .lk{color:#7FC4F5;text-decoration:underline;text-underline-offset:2px}
+
+.subs{display:flex;flex-direction:column}
+.sub{display:flex;align-items:center;gap:10px;padding:9px 10px;border-bottom:1px solid var(--app-rule);font-size:12.9px;border-radius:6px}
+.sub:last-child{border-bottom:0}
+.sub .ic{width:13px;height:13px;border-radius:3px;border:1.5px solid var(--app-muted);flex:0 0 auto}
+.sub .ic.done{background:var(--app-muted);border-color:var(--app-muted)}
+.sub .tag{margin-left:auto;font-family:"JetBrains Mono";font-size:9.5px;color:var(--app-muted)}
+.sub.faded{opacity:.5}
+
+.btn{display:inline-block;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:600;background:#2F6FED;color:#fff}
+
+.tbl-scroll{overflow-x:auto;margin:0 0 20px;max-width:var(--maxw);border:1px solid var(--rule);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.2px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--rule-2);vertical-align:top}
+th{font-family:"JetBrains Mono";font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+
+.hr{height:1px;background:var(--rule);border:0;margin:40px 0}
+footer{max-width:var(--maxw);color:var(--muted);font-size:13.4px;padding-top:8px}
+@media print{.sidenav,.topbar{display:none}.wrap{grid-template-columns:1fr}}
+</style>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <span class="brand"><span class="brand-mark">P</span> Planaria Studio</span>
+    <span class="aud">For editors</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+<nav class="sidenav">
+  <p class="lbl">Contents</p>
+  <ol>
+    <li><a href="#day">1 · Every working day</a></li>
+    <li><a href="#off">2 · When you are off</a></li>
+    <li><a href="#new">3 · A new job</a></li>
+    <li><a href="#cut">4 · While you cut</a></li>
+    <li><a href="#send">5 · Sending it in</a></li>
+    <li><a href="#back">6 · When it comes back</a></li>
+    <li><a href="#never">7 · Boxes you never touch</a></li>
+    <li><a href="#quick">8 · Quick list</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<p class="eyebrow">GoodDay handbook · September 2026</p>
+<h1>Everything an editor does in GoodDay</h1>
+<p class="standfirst">Every step here shows you the screen and where to click on it. Read it once. After that, come back only when something new happens.</p>
+
+<div class="track-wrap">
+  <p class="track-cap">A job, from start to finish</p>
+  <div class="track">
+    <div class="clip you" style="--c:var(--s-todo)"><span class="n">01</span><span class="t">TO DO</span><span class="who">Yours</span></div>
+    <div class="clip you" style="--c:var(--s-editing)"><span class="n">02</span><span class="t">EDITING</span><span class="who">Yours</span></div>
+    <div class="clip" style="--c:var(--s-internal)"><span class="n">03</span><span class="t">INTERNAL REVIEW</span><span class="who">Your SPV</span></div>
+    <div class="clip you" style="--c:var(--s-crevision)"><span class="n">04</span><span class="t">INTERNAL REVISION</span><span class="who">Yours again</span></div>
+    <div class="clip" style="--c:var(--s-final)"><span class="n">05</span><span class="t">FINAL REVIEW</span><span class="who">Julius</span></div>
+    <div class="clip" style="--c:var(--s-creview)"><span class="n">06</span><span class="t">CLIENT REVIEW</span><span class="who">The client</span></div>
+    <div class="clip you" style="--c:var(--s-crevision)"><span class="n">07</span><span class="t">CLIENT REVISION</span><span class="who">Yours again</span></div>
+    <div class="clip" style="--c:var(--s-done)"><span class="n">08</span><span class="t">APPROVED</span><span class="who">Finished</span></div>
+  </div>
+</div>
+
+<p>The coloured steps are the ones where the job is on your desk. On the other steps someone else has it. You do not need to hand it over and you do not need to chase it back. The board does that.</p>
+
+<hr class="hr">
+
+<!-- ===== 1 ===== -->
+<section id="day">
+  <div class="sec-head"><span class="sec-num">01</span><h2>Every working day</h2></div>
+  <p>Monday to Saturday, before you start work. It takes about ten seconds.</p>
+
+  <div class="step">
+    <div class="step-h"><span class="step-n">1</span><h3>Click Attendance in the left sidebar</h3></div>
+    <div class="step-body">
+      <figure>
+        <div class="shot">
+          <div class="shot-bar"><span class="dot"></span> Left sidebar</div>
+          <div class="shot-body">
+            <p class="navlab">Resources</p>
+            <div class="navitem mk"><span class="gi"></span> Attendance <span class="clickpin">click</span></div>
+            <div class="navitem"><span class="gi"></span> Hiring(test)</div>
+            <div class="navitem"><span class="gi"></span> Production</div>
+          </div>
+        </div>
+      </figure>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="step-n">2</span><h3>Click the Daily Standup tab</h3></div>
+    <div class="step-body">
+      <figure>
+        <div class="shot">
+          <div class="shot-bar"><span class="dot"></span> Attendance</div>
+          <div class="shot-body">
+            <div class="tabs">
+              <div class="tab on mk">Daily Standup <span class="clickpin">click</span></div>
+              <div class="tab">Time Off Request</div>
+              <div class="tab">Calendar</div>
+              <div class="tab">All records</div>
+            </div>
+          </div>
+        </div>
+        <figcaption>The tabs sit across the top of the Attendance project.</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="step-n">3</span><h3>Fill in the form</h3></div>
+    <div class="step-body">
+      <figure>
+        <div class="shot">
+          <div class="shot-bar"><span class="dot"></span> Attendance · Daily Standup</div>
+          <div class="shot-body" style="padding:4px 14px">
+            <div class="field">
+              <p class="fl">Your name *</p>
+              <p class="fh">Spell it exactly the same way every day</p>
+              <div class="inputbox filled">Your name</div>
+            </div>
+            <div class="field">
+              <p class="fl">What are you working on? *</p>
+              <p class="fh">The stage you will spend most of today on.</p>
+              <div class="inputbox">Please select</div>
+            </div>
+            <div class="field">
+              <p class="fl">Which job? *</p>
+              <p class="fh">Write the job name exactly as it appears on the Production board, so it can be searched.</p>
+              <div class="inputbox filled">EP 99 CUTDOWN</div>
+            </div>
+            <div class="field">
+              <p class="fl">Blocked by anything?</p>
+              <p class="fh">Optional. Only if something outside your control is holding you up.</p>
+              <div class="inputbox">&nbsp;</div>
+            </div>
+          </div>
+        </div>
+        <figcaption>The first four boxes.</figcaption>
+      </figure>
+
+      <p>Two of these go wrong most often:</p>
+      <ul>
+        <li><strong>Your name.</strong> Spell it the same way every day. A name typed three different ways looks like three different people to a search box.</li>
+        <li><strong>The job name.</strong> Copy it from the Production board. This is what lets anyone pull up every day spent on a job.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="step-n">4</span><h3>Set the day to one single day</h3></div>
+    <div class="step-body">
+      <figure>
+        <div class="shot">
+          <div class="shot-bar"><span class="dot"></span> Attendance · Daily Standup</div>
+          <div class="shot-body" style="padding:4px 14px">
+            <div class="field">
+              <p class="fl">Which day is this for? *</p>
+              <p class="fh">Set start and end to the same day. One log covers one day.</p>
+              <div class="inputbox filled mk">Sep 13 &nbsp;→&nbsp; Sep 13 <span class="clickpin">same date both sides</span></div>
+            </div>
+          </div>
+        </div>
+      </figure>
+      <p>If you set a range, one entry covers a whole week and the week's numbers come out wrong.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="step-n">5</span><h3>Answer how heavy today is, honestly</h3></div>
+    <div class="step-body">
+      <figure>
+        <div class="shot">
+          <div class="shot-bar"><span class="dot"></span> Attendance · Daily Standup</div>
+          <div class="shot-body" style="padding:4px 14px">
+            <div class="field">
+              <p class="fl">How heavy is today? *</p>
+              <p class="fh">Honest answer, not a brave one. Standby means you have nothing to do. Say so, it is not a confession. This is the number Julius uses to decide who gets the next job.</p>
+              <div class="inputbox mk">Please select <span class="clickpin">click</span></div>
+            </div>
+          </div>
+        </div>
+      </figure>
+
+      <div class="note do">
+        <span class="lab">Say Standby if you are free</span>
+        <p>Nobody is in trouble for it. Julius reads this to decide who gets the next job. If you say you are busy when you are not, the work goes to someone who is already full.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="step-n">6</span><h3>Click Submit</h3></div>
+    <div class="step-body">
+      <figure>
+        <div class="shot">
+          <div class="shot-bar"><span class="dot"></span> Attendance · Daily Standup</div>
+          <div class="shot-body" style="display:flex;align-items:center;gap:12px">
+            <span class="btn mk">Submit <span class="clickpin" style="margin-left:8px">click</span></span>
+          </div>
+        </div>
+      </figure>
+      <p>That is the whole morning routine.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 2 ===== -->
+<section id="off">
+  <div class="sec-head"><span class="sec-num">02</span><h2>When you are off</h2></div>
+  <p>Sick, taking a day, or on leave. Use a different form, and only that one.</p>
+
+  <div class="step">
+    <div class="step-h"><span class="step-n">1</span><h3>Click the Time Off Request tab instead</h3></div>
+    <div class="step-body">
+      <figure>
+        <div class="shot">
+          <div class="shot-bar"><span class="dot"></span> Attendance</div>
+          <div class="shot-body">
+            <div class="tabs">
+              <div class="tab">Daily Standup</div>
+              <div class="tab on mk">Time Off Request <span class="clickpin">click</span></div>
+              <div class="tab">Calendar</div>
+              <div class="tab">All records</div>
+            </div>
+          </div>
+        </div>
+      </figure>
+
+      <div class="note dont">
+        <span class="lab">Do not fill in both</span>
+        <p>If you are not working today, fill in Time Off Request only. Do not also fill in the standup.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="step-n">2</span><h3>Say which kind of day it is</h3></div>
+    <div class="step-body">
+      <figure>
+        <div class="shot">
+          <div class="shot-bar"><span class="dot"></span> Attendance · Time Off Request</div>
+          <div class="shot-body">
+            <div class="picker">
+              <div class="opt mk" style="--c:var(--s-crevision)"><span class="sw"></span> Sick <span class="clickpin">can be today</span></div>
+              <div class="opt" style="--c:var(--s-todo)"><span class="sw"></span> Day off <span class="clickpin" style="background:transparent;color:var(--app-muted);outline:1px solid var(--app-rule)">needs 2 days notice</span></div>
+            </div>
+          </div>
+        </div>
+      </figure>
+      <ul>
+        <li><strong>A day off needs two days' notice.</strong> Not tomorrow morning.</li>
+        <li><strong>Sick can be today.</strong> File it the same morning. If you have a doctor's note, attach it to the request.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="step-n">3</span><h3>Wait. The answer comes to you</h3></div>
+    <div class="step-body">
+      <figure>
+        <div class="msg">
+          <p class="h">✅ Your request was answered</p>
+          <p>Julius has answered your time off request for <span class="b">13 September</span>.</p>
+          <p>Open it to see what was decided: <span class="lk">Time off, 13 Sep</span></p>
+        </div>
+        <figcaption>You get a message when Julius answers. You do not need to chase him in chat.</figcaption>
+      </figure>
+
+      <p>The status on your request changes to show the answer:</p>
+      <div class="tbl-scroll">
+        <table>
+          <thead><tr><th>You asked for</th><th>Status becomes</th></tr></thead>
+          <tbody>
+            <tr><td>A sick day</td><td><span class="st" style="--c:var(--s-done)">SICK</span></td></tr>
+            <tr><td>A day off</td><td><span class="st" style="--c:var(--s-done)">DAY OFF</span></td></tr>
+            <tr><td>A day off Julius marks as paid</td><td><span class="st" style="--c:var(--s-done)">PAID LEAVE</span></td></tr>
+            <tr><td>Anything he turns down</td><td><span class="st" style="--c:var(--s-crevision)">DECLINED</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note watch">
+        <span class="lab">Paid leave is not automatic</span>
+        <p>Only Julius can mark a day as paid leave, and payroll reads that. If you think a day should be paid leave, write it in the request. Do not assume.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 3 ===== -->
+<section id="new">
+  <div class="sec-head"><span class="sec-num">03</span><h2>A new job</h2></div>
+  <p>You will be told. You never have to go looking for work on the board.</p>
+
+  <div class="step">
+    <div class="step-h"><span class="step-n">1</span><h3>Open the message and click the job name</h3></div>
+    <div class="step-body">
+      <figure>
+        <div class="msg">
+          <p class="h">🎬 New job for you</p>
+          <p><span class="lk b">EP 99 CUTDOWN</span> has been opened and you are on it.</p>
+          <p>Read the <span class="b">Brief</span> first. The date you are working to is in <span class="b">Deadline</span> at the top of the job.</p>
+          <p>Move the status to <span class="b">EDITING</span> when you start.</p>
+        </div>
+        <figcaption>The job name is a link. Click it to open the job.</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="step-n">2</span><h3>Read the Brief</h3></div>
+    <div class="step-body">
+      <figure>
+        <div class="shot">
+          <div class="shot-bar"><span class="dot"></span> PRO-15 · EP 99 CUTDOWN</div>
+          <div class="shot-body" style="padding:4px 14px">
+            <div class="field">
+              <p class="fl">Brief</p>
+              <div class="inputbox filled" style="line-height:1.55">15 second teaser for IG, vertical. Client wants the interview beat at the top, then B-roll. Music from their brand kit. Subtitles burned in.</div>
+            </div>
+          </div>
+        </div>
+        <figcaption>The Brief is what the client first asked for.</figcaption>
+      </figure>
+      <p>The Brief is written once, when the job is opened, and it never changes. Not even after five rounds of revisions. That way you can always check what was actually promised.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="step-n">3</span><h3>Look at Deadline. That is your date</h3></div>
+    <div class="step-body">
+      <figure>
+        <div class="shot">
+          <div class="shot-bar"><span class="dot"></span> PRO-15 · EP 99 CUTDOWN</div>
+          <div class="shot-body">
+            <div class="rowset">
+              <div class="row"><span class="k">Status</span><span class="v"><span class="st" style="--c:var(--s-todo)">TO DO</span></span></div>
+              <div class="row"><span class="k">Action required</span><span class="v">You</span></div>
+              <div class="row"><span class="k">Assigned to</span><span class="v">You</span></div>
+              <div class="row mk"><span class="k">Deadline</span><span class="v">Sep 18 <span class="clickpin">your date</span></span></div>
+              <div class="row"><span class="k">Start / End</span><span class="v">Sep 8 – Sep 30</span></div>
+              <div class="row"><span class="k">Estimate</span><span class="v">16 hours</span></div>
+            </div>
+          </div>
+        </div>
+        <figcaption>The top of every job looks like this.</figcaption>
+      </figure>
+
+      <div class="tbl-scroll">
+        <table>
+          <thead><tr><th>Box</th><th>What it means</th><th>Does it move?</th></tr></thead>
+          <tbody>
+            <tr><td><span class="f">Deadline</span></td><td>When this round is due back. The only date you work to.</td><td>Yes, every round</td></tr>
+            <tr><td><span class="f">Start / End</span></td><td>When you picked it up, and the date the client was promised the finished film.</td><td>No</td></tr>
+            <tr><td><span class="f">Estimate</span></td><td>How big the job was judged to be. Shown in hours. One day is 8 hours.</td><td>Rarely</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note watch">
+        <span class="lab">The mistake people make</span>
+        <p>Working to the End date. The End date is weeks away. It is when the client gets the finished film, after every round of notes. Deadline is when this cut is due with your SPV, and it is usually much sooner.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4 ===== -->
+<section id="cut">
+  <div class="sec-head"><span class="sec-num">04</span><h2>While you cut</h2></div>
+
+  <div class="step">
+    <div class="step-h"><span class="step-n">1</span><h3>Click the status at the top of the job</h3></div>
+    <div class="step-body">
+      <figure>
+        <div class="shot">
+          <div class="shot-bar"><span class="dot"></span> PRO-15 · EP 99 CUTDOWN</div>
+          <div class="shot-body">
+            <div class="rowset">
+              <div class="row mk"><span class="k">Status</span><span class="v"><span class="st" style="--c:var(--s-todo)">TO DO</span> <span class="clickpin">click</span></span></div>
+              <div class="row"><span class="k">Action required</span><span class="v">You</span></div>
+            </div>
+          </div>
+        </div>
+      </figure>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="step-n">2</span><h3>Choose EDITING</h3></div>
+    <div class="step-body">
+      <figure>
+        <div class="shot">
+          <div class="shot-bar"><span class="dot"></span> Status</div>
+          <div class="shot-body">
+            <div class="picker">
+              <div class="opt dim" style="--c:var(--s-todo)"><span class="sw"></span> TO DO</div>
+              <div class="opt mk" style="--c:var(--s-editing)"><span class="sw"></span> EDITING <span class="clickpin">click</span></div>
+              <div class="opt dim" style="--c:var(--s-internal)"><span class="sw"></span> INTERNAL REVIEW</div>
+              <div class="opt dim" style="--c:var(--s-crevision)"><span class="sw"></span> INTERNAL REVISION</div>
+              <div class="opt dim" style="--c:var(--s-final)"><span class="sw"></span> FINAL REVIEW</div>
+              <div class="opt dim" style="--c:var(--s-crevision)"><span class="sw"></span> CLIENT REVISION</div>
+              <div class="opt dim" style="--c:var(--s-creview)"><span class="sw"></span> CLIENT REVIEW</div>
+              <div class="opt dim" style="--c:var(--s-done)"><span class="sw"></span> APPROVED</div>
+            </div>
+          </div>
+        </div>
+        <figcaption>You will only ever pick two from this list: EDITING and INTERNAL REVIEW.</figcaption>
+      </figure>
+      <p>Do this when you start, not when you are halfway. It is how anyone can see what is being worked on right now.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="step-n">3</span><h3>If the deadline is tomorrow, you get this message</h3></div>
+    <div class="step-body">
+      <figure>
+        <div class="msg">
+          <p class="h">⏰ Due tomorrow</p>
+          <p>⏰ <span class="b">EP 99 CUTDOWN</span> is due tomorrow.</p>
+          <p>That is the date sitting in the <span class="b">Deadline</span> box on the job. If it is going to slip, say so today. Tell your SPV now, not tomorrow morning.</p>
+          <p>If a new date has already been agreed and nobody moved it, ask them to update <span class="b">Deadline</span> so the board is telling the truth.</p>
+        </div>
+        <figcaption>Sent at 7am the day before. It only comes while the job is on your desk, never while someone else is reviewing it.</figcaption>
+      </figure>
+
+      <div class="note do">
+        <span class="lab">What to do about it</span>
+        <p>If you will not make it, tell your SPV the same day you get this message. A day's warning gives them time to move things around. Telling them on the morning it is due does not.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 5 ===== -->
+<section id="send">
+  <div class="sec-head"><span class="sec-num">05</span><h2>Sending it in</h2></div>
+  <p>One status change. Nothing else.</p>
+
+  <div class="step">
+    <div class="step-h"><span class="step-n">1</span><h3>Click the status and choose INTERNAL REVIEW</h3></div>
+    <div class="step-body">
+      <figure>
+        <div class="shot">
+          <div class="shot-bar"><span class="dot"></span> Status</div>
+          <div class="shot-body">
+            <div class="picker">
+              <div class="opt dim" style="--c:var(--s-todo)"><span class="sw"></span> TO DO</div>
+              <div class="opt dim" style="--c:var(--s-editing)"><span class="sw"></span> EDITING</div>
+              <div class="opt mk" style="--c:var(--s-internal)"><span class="sw"></span> INTERNAL REVIEW <span class="clickpin">click</span></div>
+              <div class="opt dim" style="--c:var(--s-crevision)"><span class="sw"></span> INTERNAL REVISION</div>
+              <div class="opt dim" style="--c:var(--s-final)"><span class="sw"></span> FINAL REVIEW</div>
+              <div class="opt dim" style="--c:var(--s-crevision)"><span class="sw"></span> CLIENT REVISION</div>
+              <div class="opt dim" style="--c:var(--s-creview)"><span class="sw"></span> CLIENT REVIEW</div>
+              <div class="opt dim" style="--c:var(--s-done)"><span class="sw"></span> APPROVED</div>
+            </div>
+          </div>
+        </div>
+      </figure>
+      <p>That is the whole handover. Your SPV gets a message and the job moves into their list. You do not need to tell them in chat or tag anyone.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="step-n">2</span><h3>Leave these two boxes alone</h3></div>
+    <div class="step-body">
+      <figure>
+        <div class="shot">
+          <div class="shot-bar"><span class="dot"></span> PRO-15 · further down the job</div>
+          <div class="shot-body">
+            <div class="rowset">
+              <div class="row"><span class="k">Review result</span><span class="v" style="color:var(--app-muted)">empty <span class="clickpin" style="background:var(--stop);color:#fff">your SPV's box</span></span></div>
+              <div class="row"><span class="k">Final approval</span><span class="v" style="color:var(--app-muted)">empty <span class="clickpin" style="background:var(--stop);color:#fff">Julius's box</span></span></div>
+            </div>
+          </div>
+        </div>
+      </figure>
+
+      <div class="note dont">
+        <span class="lab">Do not fill these in</span>
+        <p>If you set one of them yourself, the job jumps forward and skips the check it was supposed to get. You never need either box.</p>
+      </div>
+
+      <p>After that, stop thinking about it. If it needs more work it comes back to you on its own, with a ticket that says what to change.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 6 ===== -->
+<section id="back">
+  <div class="sec-head"><span class="sec-num">06</span><h2>When it comes back</h2></div>
+  <p>This part works differently from ClickUp. Read it properly once.</p>
+
+  <div class="step">
+    <div class="step-h"><span class="step-n">1</span><h3>You get a message. The job is already back on you</h3></div>
+    <div class="step-body">
+      <figure>
+        <div class="msg">
+          <p class="h">🔁 Changes wanted</p>
+          <p><span class="lk b">EP 99 CUTDOWN</span> has come back for changes.</p>
+          <p>What to change is in the new ticket under the job. The date for this round is in <span class="b">Deadline</span>.</p>
+        </div>
+      </figure>
+      <p>The status will be one of two things:</p>
+      <ul>
+        <li><span class="st" style="--c:var(--s-crevision)">INTERNAL REVISION</span>: your SPV or Julius wants changes. Nobody outside the studio has seen it.</li>
+        <li><span class="st" style="--c:var(--s-crevision)">CLIENT REVISION</span>: the client has seen it and wants changes.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="step-n">2</span><h3>Scroll down to Subtasks and open the newest ticket</h3></div>
+    <div class="step-body">
+      <figure>
+        <div class="shot">
+          <div class="shot-bar"><span class="dot"></span> PRO-15 · Subtasks</div>
+          <div class="shot-body">
+            <div class="subs">
+              <div class="sub faded"><span class="ic done"></span> Internal revision 1 <span class="tag">closed</span></div>
+              <div class="sub faded"><span class="ic done"></span> Internal revision 2 <span class="tag">closed</span></div>
+              <div class="sub faded"><span class="ic done"></span> Client revision 1 <span class="tag">closed</span></div>
+              <div class="sub mk"><span class="ic"></span> Client revision 2 <span class="clickpin">click</span></div>
+            </div>
+          </div>
+        </div>
+        <figcaption>Every round leaves a ticket behind. The numbered one at the bottom is the round you are on now.</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="step-n">3</span><h3>Read the ticket. It says what to change</h3></div>
+    <div class="step-body">
+      <figure>
+        <div class="shot">
+          <div class="shot-bar"><span class="dot"></span> PRO-39 · Client revision 2</div>
+          <div class="shot-body" style="padding:14px 16px">
+            <p style="font-weight:600;margin:0 0 4px;font-size:13.4px">What the client asked for</p>
+            <p style="color:var(--app-muted);font-size:12.8px;margin:0 0 13px;line-height:1.55">Cut the intro by 3 seconds. Music too loud under the VO from 0:08. Use the wider shot at 0:14 instead.</p>
+            <p style="font-weight:600;margin:0 0 4px;font-size:13.4px">Everything they sent</p>
+            <p style="color:var(--app-muted);font-size:12.8px;margin:0 0 13px;line-height:1.55">📎 client-notes-r2.pdf &nbsp;·&nbsp; <span class="lk">frame.io link</span></p>
+            <p style="margin:0;font-size:12.8px;line-height:1.55">The deadline for this round is on the job, in the box called Deadline. Close this ticket when the round is finished.</p>
+          </div>
+        </div>
+        <figcaption>The notes and the files are on the ticket. The date is on the job.</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="step-n">4</span><h3>Go back to the job and check Deadline</h3></div>
+    <div class="step-body">
+      <figure>
+        <div class="shot">
+          <div class="shot-bar"><span class="dot"></span> PRO-15 · EP 99 CUTDOWN</div>
+          <div class="shot-body">
+            <div class="rowset">
+              <div class="row"><span class="k">Status</span><span class="v"><span class="st" style="--c:var(--s-crevision)">CLIENT REVISION</span></span></div>
+              <div class="row mk"><span class="k">Deadline</span><span class="v">Sep 22 <span class="clickpin">new date</span></span></div>
+            </div>
+          </div>
+        </div>
+        <figcaption>Your SPV or Julius put the new date here when they sent it back.</figcaption>
+      </figure>
+
+      <div class="note watch">
+        <span class="lab">The date is not on the ticket</span>
+        <p>Look at Deadline on the job, not on the revision ticket. One box, one date, every round. That way you never have to work out which of several dates is the live one.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="step-n">5</span><h3>Do the work, then tick the ticket closed</h3></div>
+    <div class="step-body">
+      <figure>
+        <div class="shot">
+          <div class="shot-bar"><span class="dot"></span> PRO-15 · Subtasks</div>
+          <div class="shot-body">
+            <div class="subs">
+              <div class="sub faded"><span class="ic done"></span> Client revision 1 <span class="tag">closed</span></div>
+              <div class="sub mk"><span class="ic"></span> Client revision 2 <span class="clickpin">tick this</span></div>
+            </div>
+          </div>
+        </div>
+      </figure>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="step-n">6</span><h3>Set the job back to INTERNAL REVIEW</h3></div>
+    <div class="step-body">
+      <figure>
+        <div class="shot">
+          <div class="shot-bar"><span class="dot"></span> Status</div>
+          <div class="shot-body">
+            <div class="picker">
+              <div class="opt dim" style="--c:var(--s-editing)"><span class="sw"></span> EDITING</div>
+              <div class="opt mk" style="--c:var(--s-internal)"><span class="sw"></span> INTERNAL REVIEW <span class="clickpin">click</span></div>
+              <div class="opt dim" style="--c:var(--s-crevision)"><span class="sw"></span> CLIENT REVISION</div>
+            </div>
+          </div>
+        </div>
+      </figure>
+      <p>Every round goes back through INTERNAL REVIEW, including client rounds. Your SPV sees it before the client does, every time.</p>
+
+      <div class="note dont">
+        <span class="lab">Do not edit the Brief</span>
+        <p>In ClickUp the brief got overwritten each time new client notes arrived, and after four rounds nobody could see what was first asked for. Here the Brief stays as written and every round lives on its own ticket. If you think the Brief is wrong, tell your SPV. Do not fix it yourself.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 7 ===== -->
+<section id="never">
+  <div class="sec-head"><span class="sec-num">07</span><h2>Boxes you never touch</h2></div>
+  <p>Four of them. Everything else on a job is fine to use.</p>
+
+  <figure>
+    <div class="shot">
+      <div class="shot-bar"><span class="dot"></span> Not yours</div>
+      <div class="shot-body">
+        <div class="rowset">
+          <div class="row"><span class="k">Review result</span><span class="v" style="color:var(--app-muted)">Your SPV at internal review. Julius at client review. Setting it moves the job.</span></div>
+          <div class="row"><span class="k">Final approval</span><span class="v" style="color:var(--app-muted)">Julius only. Approving tells the studio the file went to the client today.</span></div>
+          <div class="row"><span class="k">Brief</span><span class="v" style="color:var(--app-muted)">The original ask. It stays as written.</span></div>
+          <div class="row"><span class="k">Deadline</span><span class="v" style="color:var(--app-muted)">Your SPV and Julius set this. Ask them to change it rather than changing it yourself.</span></div>
+        </div>
+      </div>
+    </div>
+  </figure>
+
+  <h3 style="font-size:17.5px;font-weight:600;margin:30px 0 10px">Things that happen without you</h3>
+  <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>When</th><th>What happens by itself</th></tr></thead>
+      <tbody>
+        <tr><td>A job is opened with you on it</td><td>You get a message with a link to it</td></tr>
+        <tr><td>You set INTERNAL REVIEW</td><td>The job moves to your SPV and they are told</td></tr>
+        <tr><td>Someone asks for changes</td><td>The job comes back to you, a numbered ticket is made and given to you, and you are told</td></tr>
+        <tr><td>7am the day before a deadline</td><td>You get the due tomorrow message</td></tr>
+        <tr><td>The job is approved</td><td>It clears out of everyone's list</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p><strong>Action required</strong> on a job tells you whose turn it is. If it says you, the job is waiting on you. If it says someone else, it is not.</p>
+</section>
+
+<!-- ===== 8 ===== -->
+<section id="quick">
+  <div class="sec-head"><span class="sec-num">08</span><h2>Quick list</h2></div>
+  <ol>
+    <li>Standup every working morning. Same spelling of your name. Honest workload.</li>
+    <li>Not working? Time Off Request instead. Never both.</li>
+    <li><span class="f">Deadline</span> is your date. Not Start/End.</li>
+    <li><span class="st" style="--c:var(--s-editing)">EDITING</span> when you start. <span class="st" style="--c:var(--s-internal)">INTERNAL REVIEW</span> when it is ready. Those are your only two status changes.</li>
+    <li>Revisions arrive as a numbered ticket. Read it, do it, tick it closed, send the job back.</li>
+  </ol>
+
+  <footer>
+    <p>Planaria Studio · GoodDay handbook for editors · September 2026. If something here does not match what you see on screen, the screen is right and this page is out of date. Tell Joshua.</p>
+  </footer>
+</section>
+
+</main>
+</div>
+<script>window.__GUIDE_NAV__ = [{"href":"https://planariastudio.github.io/planaria-goodday-leadership-guide/","label":"Leadership guide"},{"href":"Planaria-Editor-Handbook.pdf","label":"PDF"}];</script>
+<script>
+// Adds the cross-links into the guide's own top bar. Keeps the guide files themselves
+// untouched, so the same file can be published as an artifact or to the web.
+(function () {
+  var bar = document.querySelector('.topbar-in');
+  if (!bar) return;
+  var chip = bar.querySelector('.aud');
+  var wrap = document.createElement('span');
+  wrap.style.cssText = 'display:flex;gap:14px;align-items:center;margin-left:18px;font-size:13px';
+  var links = window.__GUIDE_NAV__ || [];
+  links.forEach(function (l) {
+    var a = document.createElement('a');
+    a.href = l.href;
+    a.textContent = l.label;
+    a.style.cssText = 'color:var(--muted);text-decoration:none;white-space:nowrap';
+    a.onmouseover = function () { a.style.color = 'var(--ink)'; };
+    a.onmouseout  = function () { a.style.color = 'var(--muted)'; };
+    wrap.appendChild(a);
+  });
+  if (chip) bar.insertBefore(wrap, chip); else bar.appendChild(wrap);
+})();
+</script>
+</body>
+</html>
