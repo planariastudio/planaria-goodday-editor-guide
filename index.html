@@ -275,8 +275,13 @@ footer{max-width:var(--maxw);color:var(--muted);font-size:13.4px;padding-top:8px
           <div class="shot-body" style="padding:4px 14px">
             <div class="field">
               <p class="fl">Your name *</p>
-              <p class="fh">Spell it exactly the same way every day</p>
-              <div class="inputbox filled">Your name</div>
+              <p class="fh">Pick yourself from the list. This is what files the day against you.</p>
+              <div class="inputbox mk">Not assigned <span class="clickpin">pick yourself</span></div>
+            </div>
+            <div class="field">
+              <p class="fl">Which job? *</p>
+              <p class="fh">Write the job name exactly as it appears on the Production board. This becomes the title of the record, so it is what makes the day findable later.</p>
+              <div class="inputbox filled">EP 99 CUTDOWN</div>
             </div>
             <div class="field">
               <p class="fl">What are you working on? *</p>
@@ -284,9 +289,9 @@ footer{max-width:var(--maxw);color:var(--muted);font-size:13.4px;padding-top:8px
               <div class="inputbox">Please select</div>
             </div>
             <div class="field">
-              <p class="fl">Which job? *</p>
-              <p class="fh">Write the job name exactly as it appears on the Production board, so it can be searched.</p>
-              <div class="inputbox filled">EP 99 CUTDOWN</div>
+              <p class="fl">Other work today</p>
+              <p class="fh">Optional. Any other job you touched today, one per line. Hold shift and press enter to start a new line.</p>
+              <div class="inputbox">&nbsp;</div>
             </div>
             <div class="field">
               <p class="fl">Blocked by anything?</p>
@@ -295,14 +300,16 @@ footer{max-width:var(--maxw);color:var(--muted);font-size:13.4px;padding-top:8px
             </div>
           </div>
         </div>
-        <figcaption>The first four boxes.</figcaption>
+        <figcaption>Your name is a list, not a box you type into.</figcaption>
       </figure>
 
-      <p>Two of these go wrong most often:</p>
-      <ul>
-        <li><strong>Your name.</strong> Spell it the same way every day. A name typed three different ways looks like three different people to a search box.</li>
-        <li><strong>The job name.</strong> Copy it from the Production board. This is what lets anyone pull up every day spent on a job.</li>
-      </ul>
+      <p>Two things matter here. <strong>Your name</strong> is what files the day against you rather than against nobody, and it is what lets your SPV pull up your week in one view. <strong>The job name</strong> becomes the title of the record, so copy it from the Production board rather than typing it from memory.</p>
+      <p>Working on two jobs today? Put the main one in <span class="b">Which job?</span> and the rest in <span class="b">Other work today</span>. One standup per day, always. Two standups for the same day makes it look like you worked twice.</p>
+
+      <div class="note watch">
+        <span class="lab">Pick yourself, not the person sitting next to you</span>
+        <p>If somebody else's screen is open, the form will happily file your day against them. Check the name before you submit.</p>
+      </div>
     </div>
   </div>
 
@@ -315,41 +322,18 @@ footer{max-width:var(--maxw);color:var(--muted);font-size:13.4px;padding-top:8px
           <div class="shot-body" style="padding:4px 14px">
             <div class="field">
               <p class="fl">Which day is this for? *</p>
-              <p class="fh">Set start and end to the same day. One log covers one day.</p>
-              <div class="inputbox filled mk">Sep 13 &nbsp;→&nbsp; Sep 13 <span class="clickpin">same date both sides</span></div>
+              <p class="fh">The day you are logging. One standup covers one day.</p>
+              <div class="inputbox filled mk">Sep 14 <span class="clickpin">one date</span></div>
             </div>
           </div>
         </div>
       </figure>
-      <p>If you set a range, one entry covers a whole week and the week's numbers come out wrong.</p>
+      <p>One date, not a range. Almost always today, but you can pick an earlier day if you are filling in one you missed.</p>
     </div>
   </div>
 
   <div class="step">
-    <div class="step-h"><span class="step-n">5</span><h3>Answer how heavy today is, honestly</h3></div>
-    <div class="step-body">
-      <figure>
-        <div class="shot">
-          <div class="shot-bar"><span class="dot"></span> Attendance · Daily Standup</div>
-          <div class="shot-body" style="padding:4px 14px">
-            <div class="field">
-              <p class="fl">How heavy is today? *</p>
-              <p class="fh">Honest answer, not a brave one. Standby means you have nothing to do. Say so, it is not a confession. This is the number Julius uses to decide who gets the next job.</p>
-              <div class="inputbox mk">Please select <span class="clickpin">click</span></div>
-            </div>
-          </div>
-        </div>
-      </figure>
-
-      <div class="note do">
-        <span class="lab">Say Standby if you are free</span>
-        <p>Nobody is in trouble for it. Julius reads this to decide who gets the next job. If you say you are busy when you are not, the work goes to someone who is already full.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="step">
-    <div class="step-h"><span class="step-n">6</span><h3>Click Submit</h3></div>
+    <div class="step-h"><span class="step-n">5</span><h3>Click Submit</h3></div>
     <div class="step-body">
       <figure>
         <div class="shot">
