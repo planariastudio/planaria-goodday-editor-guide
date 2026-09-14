@@ -732,37 +732,41 @@ footer{max-width:var(--maxw);color:var(--muted);font-size:13.4px;padding-top:8px
   </div>
 
   <div class="step">
-    <div class="step-h"><span class="step-n">5</span><h3>Do the work, then tick the ticket closed</h3></div>
+    <div class="step-h"><span class="step-n">5</span><h3>Do the work, then set the ticket to ROUND DONE</h3></div>
     <div class="step-body">
+      <p>Open the revision ticket, click its status, and choose <span class="st" style="--c:var(--s-done)">ROUND DONE</span>. That status exists only for revision tickets. Never put it on a job.</p>
       <figure>
         <div class="shot">
-          <div class="shot-bar"><span class="dot"></span> PRO-15 · Subtasks</div>
+          <div class="shot-bar"><span class="dot"></span> PRO-39 · Client revision 2 · Status</div>
           <div class="shot-body">
-            <div class="subs">
-              <div class="sub faded"><span class="ic done"></span> Client revision 1 <span class="tag">closed</span></div>
-              <div class="sub mk"><span class="ic"></span> Client revision 2 <span class="clickpin">tick this</span></div>
+            <div class="picker">
+              <div class="opt dim" style="--c:var(--s-todo)"><span class="sw"></span> TO DO</div>
+              <div class="opt dim" style="--c:var(--s-editing)"><span class="sw"></span> EDITING</div>
+              <div class="opt mk" style="--c:var(--s-done)"><span class="sw"></span> ROUND DONE <span class="clickpin">click</span></div>
             </div>
           </div>
         </div>
+        <figcaption>A revision ticket shows the same status list as a job. Ignore all of it except ROUND DONE.</figcaption>
       </figure>
     </div>
   </div>
 
   <div class="step">
-    <div class="step-h"><span class="step-n">6</span><h3>Set the job back to INTERNAL REVIEW</h3></div>
+    <div class="step-h"><span class="step-n">6</span><h3>The job moves itself to INTERNAL REVIEW</h3></div>
     <div class="step-body">
       <figure>
         <div class="shot">
-          <div class="shot-bar"><span class="dot"></span> Status</div>
+          <div class="shot-bar"><span class="dot"></span> PRO-15 · EP 99 CUTDOWN</div>
           <div class="shot-body">
-            <div class="picker">
-              <div class="opt dim" style="--c:var(--s-editing)"><span class="sw"></span> EDITING</div>
-              <div class="opt mk" style="--c:var(--s-internal)"><span class="sw"></span> INTERNAL REVIEW <span class="clickpin">click</span></div>
-              <div class="opt dim" style="--c:var(--s-crevision)"><span class="sw"></span> CLIENT REVISION</div>
+            <div class="rowset">
+              <div class="row mk"><span class="k">Status</span><span class="v"><span class="st" style="--c:var(--s-internal)">INTERNAL REVIEW</span> <span class="clickpin">automatic</span></span></div>
+              <div class="row"><span class="k">Action required</span><span class="v">Your SPV</span></div>
             </div>
           </div>
         </div>
+        <figcaption>Once every ticket on the job is ROUND DONE, the job moves and your SPV is told. You do not touch the status.</figcaption>
       </figure>
+      <p>If there is still another ticket open on the job, nothing moves yet. Finish that one too.</p>
       <p>Every round goes back through INTERNAL REVIEW, including client rounds. Your SPV sees it before the client does, every time.</p>
 
       <div class="note dont">
@@ -817,7 +821,7 @@ footer{max-width:var(--maxw);color:var(--muted);font-size:13.4px;padding-top:8px
     <li>Not working? Time Off Request instead. Never both.</li>
     <li><span class="f">Deadline</span> is your date. Not Start/End.</li>
     <li><span class="st" style="--c:var(--s-editing)">EDITING</span> when you start. <span class="st" style="--c:var(--s-internal)">INTERNAL REVIEW</span> when it is ready. Those are your only two status changes.</li>
-    <li>Revisions arrive as a numbered ticket. Read it, do it, tick it closed, send the job back.</li>
+    <li>Revisions arrive as a numbered ticket. Read it, do it, set the ticket to ROUND DONE. The job sends itself back.</li>
   </ol>
 
   <footer>
