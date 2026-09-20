@@ -236,8 +236,26 @@ footer{max-width:var(--maxw);color:var(--muted);font-size:13.4px;padding-top:8px
   <p>You will be told. You never have to go looking for work on the board.</p>
 
   <div class="step">
-    <div class="step-h"><span class="step-n">1</span><h3>Open the message and click the job name</h3></div>
+    <div class="step-h"><span class="step-n">1</span><h3>Find your messages</h3></div>
     <div class="step-body">
+      <p>GoodDay does not email you. It tells you things inside the app, in two places, and they show the same things.</p>
+      <figure>
+        <div class="shot">
+          <div class="shot-bar"><span class="dot"></span> The list down the left, when you click Home</div>
+          <div class="shot-body">
+            <p class="navlab">Home</p>
+            <div class="navitem"><span class="gi"></span> My Work <span style="margin-left:auto;color:var(--app-muted);font-size:11.5px">9</span></div>
+            <div class="navitem"><span class="gi"></span> My Tasks</div>
+            <div class="navitem"><span class="gi"></span> Time Tracking</div>
+            <div class="navitem"><span class="gi"></span> Notepad</div>
+            <div class="navitem mk"><span class="gi"></span> Notifications <span class="clickpin">your messages</span></div>
+            <div class="navitem"><span class="gi"></span> Recent</div>
+          </div>
+        </div>
+        <figcaption><span class="b">Notifications</span> is everything GoodDay has told you. There is also a bell icon in the top right corner of the window that opens the same list, if that is quicker. <span class="b">My Work</span> next to it is the other one to know: that is the list of jobs waiting on you right now.</figcaption>
+      </figure>
+
+      <p>A message about a new job looks like this. The blue job name is a link.</p>
       <figure>
         <div class="msg">
           <p class="h">🎬 New job for you</p>
@@ -245,8 +263,13 @@ footer{max-width:var(--maxw);color:var(--muted);font-size:13.4px;padding-top:8px
           <p>Read the brief at the top of the job first. The date you are working to is in <span class="b">Deadline</span>.</p>
           <p>Move the status to <span class="b">EDITING</span> when you start.</p>
         </div>
-        <figcaption>The job name is a link. Click it to open the job.</figcaption>
+        <figcaption>Click the job name to open the job. If you would rather not go through messages at all, <span class="b">My Work</span> shows you the same jobs without the reading.</figcaption>
       </figure>
+
+      <div class="note do">
+        <span class="lab">If you have never used something like this before</span>
+        <p>You do not have to check anything on a schedule, and nothing here is a chat you have to keep up with. A job only appears in <span class="b">My Work</span> when it is genuinely your turn, and it leaves by itself when you hand it on. If My Work is empty, there is nothing waiting on you.</p>
+      </div>
     </div>
   </div>
 
@@ -369,6 +392,137 @@ footer{max-width:var(--maxw);color:var(--muted);font-size:13.4px;padding-top:8px
       <div class="note do">
         <span class="lab">What to do about it</span>
         <p>If you will not make it, tell your SPV the same day you get this message. A day's warning gives them time to move things around. Telling them on the morning it is due does not.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="step-n">4</span><h3>Start the timer when you start work</h3></div>
+    <div class="step-body">
+      <p>GoodDay can time you while you work, so you never have to remember or guess afterwards. Press start when you sit down, press stop when you get up. That is the whole job.</p>
+
+      <p><span class="b">Step one. Find Time Reports.</span> Open the job. Down the right-hand side is a long column. This is the top of it, and none of this is what you want yet.</p>
+      <figure>
+        <div class="shot">
+          <div class="shot-bar"><span class="dot"></span> the column down the right &mdash; the top</div>
+          <div class="shot-body">
+            <div class="rowset">
+              <div class="row"><span class="k">Status</span><span class="v" style="color:var(--app-muted)">EDITING</span></div>
+              <div class="row"><span class="k">Action required</span><span class="v" style="color:var(--app-muted)">You</span></div>
+              <div class="row"><span class="k">Assigned to</span><span class="v" style="color:var(--app-muted)">You</span></div>
+              <div class="row"><span class="k">Deadline</span><span class="v" style="color:var(--app-muted)">Sep 18</span></div>
+              <div class="row"><span class="k">Start/End</span><span class="v" style="color:var(--app-muted)">Sep 8 &ndash; Sep 11</span></div>
+              <div class="row"><span class="k">Estimate</span><span class="v" style="color:var(--app-muted)">16 hours</span></div>
+              <div class="row"><span class="k">All fields</span><span class="v" style="color:var(--app-muted)">&nbsp;</span></div>
+            </div>
+            <p class="navlab" style="margin:13px 0 4px">Custom fields</p>
+            <div class="rowset" style="opacity:.45">
+              <div class="row"><span class="k">Brief document</span><span class="v">&nbsp;</span></div>
+              <div class="row"><span class="k">Main Asset</span><span class="v">&nbsp;</span></div>
+              <div class="row"><span class="k">Revision brief</span><span class="v">&nbsp;</span></div>
+              <div class="row"><span class="k">Project #</span><span class="v">&nbsp;</span></div>
+              <div class="row"><span class="k">Project Owner</span><span class="v">&nbsp;</span></div>
+            </div>
+          </div>
+        </div>
+        <figcaption>Everything above is somebody else's to fill in. Keep scrolling.</figcaption>
+      </figure>
+
+      <p style="text-align:center;color:var(--muted);font-size:20px;margin:0 0 6px">&darr;</p>
+      <p style="text-align:center;color:var(--muted);font-size:13px;margin:0 0 14px">keep scrolling to the very bottom of that column</p>
+
+      <figure>
+        <div class="shot">
+          <div class="shot-bar"><span class="dot"></span> the same column &mdash; the bottom</div>
+          <div class="shot-body">
+            <p class="navlab" style="margin:0 0 4px">CRM</p>
+            <div class="rowset" style="opacity:.45">
+              <div class="row"><span class="k">Account</span><span class="v">Client A</span></div>
+              <div class="row"><span class="k">Contacts</span><span class="v">Add contact</span></div>
+            </div>
+            <div class="rowset" style="margin-top:13px">
+              <div class="row mk"><span class="k" style="font-weight:700;color:var(--app-ink);font-size:13.4px">Time Reports</span><span class="v"><span class="clickpin">click this</span></span></div>
+            </div>
+            <div class="rowset" style="opacity:.45;margin-top:2px">
+              <div class="row"><span class="k">Users</span><span class="v">&nbsp;</span></div>
+            </div>
+          </div>
+        </div>
+        <figcaption><span class="b">Time Reports</span> is the second heading from the bottom, just after CRM and just before Users. If you can see Users, you have gone one step too far.</figcaption>
+      </figure>
+
+      <p><span class="b">Step two. Press Start timer.</span> The middle of the screen changes. The first time it says No time reports found.</p>
+      <figure>
+        <div class="shot">
+          <div class="shot-bar"><span class="dot"></span> Time Reports</div>
+          <div class="shot-body" style="text-align:center;padding:24px 14px">
+            <p style="margin:0 0 18px;color:var(--app-muted);font-size:13px">No time reports found</p>
+            <div class="rowset" style="max-width:300px;margin:0 auto;text-align:left">
+              <div class="row mk"><span class="k" style="color:var(--app-ink);font-weight:600">&#9654;&nbsp; Start timer</span><span class="v"><span class="clickpin">press this</span></span></div>
+              <div class="row"><span class="k" style="color:var(--app-muted)">&#43;&nbsp; Add time report</span><span class="v">&nbsp;</span></div>
+            </div>
+          </div>
+        </div>
+        <figcaption>Press <span class="b">Start timer</span> and go and work. Nothing else to do.</figcaption>
+      </figure>
+
+      <p><span class="b">Step three. A small bar sits at the bottom right of your screen while it runs.</span> It shows the job and the clock. You can leave it alone all day.</p>
+      <figure>
+        <div class="shot">
+          <div class="shot-bar"><span class="dot"></span> bottom right corner of the screen</div>
+          <div class="shot-body">
+            <div class="rowset">
+              <div class="row"><span class="k" style="color:var(--app-ink)">&#10073;&#10073;&nbsp; &#9632;&nbsp; 00:42:15</span><span class="v" style="color:var(--app-muted)">EP 99 CUTDOWN</span></div>
+            </div>
+          </div>
+        </div>
+        <figcaption>The two buttons are pause and stop. <span class="b">Pause</span> for lunch or a long break. <span class="b">Stop</span> when you have finished working on that job.</figcaption>
+      </figure>
+
+      <p><span class="b">Step four. Press stop, write one line, submit.</span> A box opens with your time already filled in, so there is no arithmetic.</p>
+      <figure>
+        <div class="shot">
+          <div class="shot-bar"><span class="dot"></span> New Time Report</div>
+          <div class="shot-body" style="padding:0">
+            <div class="field">
+              <p class="fl">Time reported</p>
+              <p class="fh">Already filled in by the timer. Leave it.</p>
+              <div class="inputbox filled">42m</div>
+            </div>
+            <div class="field">
+              <p class="fl">Report date</p>
+              <p class="fh">Already today. Leave it.</p>
+              <div class="inputbox filled">Sep 20</div>
+            </div>
+            <div class="field">
+              <p class="fl">Start-end time</p>
+              <p class="fh">Already filled in. Leave it.</p>
+              <div class="inputbox">6:46 pm &ndash; 7:28 pm</div>
+            </div>
+            <div class="field">
+              <p class="fl">Is Billable</p>
+              <p class="fh">Already on. Leave it.</p>
+              <div class="inputbox">on</div>
+            </div>
+            <div class="field">
+              <p class="fl">Comments <span class="clickpin">the only thing you type</span></p>
+              <p class="fh">One short line saying what you did this session.</p>
+              <div class="inputbox filled">Assembly and first pass</div>
+            </div>
+          </div>
+        </div>
+        <figcaption>Then press <span class="b">Submit</span>. Four boxes fill themselves and you write one sentence.</figcaption>
+      </figure>
+
+      
+      <div class="note watch">
+        <span class="lab">Start a new timer for each job</span>
+        <p>The timer belongs to one job. If you switch to a different job, stop the first timer and start one on the second, or the whole afternoon lands on whichever job you happened to open first.</p>
+      </div>
+
+      <div class="note dont">
+        <span class="lab">Estimate is a different number, and it is not yours</span>
+        <p>Further up the same column there is a box called <span class="b">Estimate</span>, usually reading something like 16 hours. That is your SPV's guess, made before you saw the job. It is not a target and you do not correct it. Time Reports is what it really took. The two are meant to be different.</p>
       </div>
     </div>
   </div>
@@ -530,6 +684,12 @@ footer{max-width:var(--maxw);color:var(--muted);font-size:13.4px;padding-top:8px
         </div>
         <figcaption>A revision ticket shows the same status list as a job. Ignore all of it except ROUND DONE.</figcaption>
       </figure>
+
+      <div class="note do">
+        <span class="lab">Log the round's time first</span>
+        <p>Before you close the ticket, put the hours for this round in <span class="b">Time Reports</span> on the job. Not on the ticket, on the job, so all the rounds add up in one place.</p>
+        <p>This is the number that shows how much a revision round actually costs. Two rounds that both look like "one round" on the board can be an hour and a day and a half, and only the time says which was which.</p>
+      </div>
     </div>
   </div>
 
@@ -563,7 +723,7 @@ footer{max-width:var(--maxw);color:var(--muted);font-size:13.4px;padding-top:8px
 <!-- ===== 7 ===== -->
 <section id="never">
   <div class="sec-head"><span class="sec-num">05</span><h2>Boxes you never touch</h2></div>
-  <p>Five of them. Everything else on a job is fine to use.</p>
+  <p>Six of them. Everything else on a job is fine to use.</p>
 
   <figure>
     <div class="shot">
@@ -575,6 +735,7 @@ footer{max-width:var(--maxw);color:var(--muted);font-size:13.4px;padding-top:8px
           <div class="row"><span class="k">The brief at the top</span><span class="v" style="color:var(--app-muted)">The original ask. It stays as written for the life of the job.</span></div>
           <div class="row"><span class="k">Revision brief</span><span class="v" style="color:var(--app-muted)">What to change this round. Your SPV or Julius writes it each round.</span></div>
           <div class="row"><span class="k">Deadline</span><span class="v" style="color:var(--app-muted)">Your SPV and Julius set this. Ask them to change it rather than changing it yourself.</span></div>
+          <div class="row"><span class="k">Estimate</span><span class="v" style="color:var(--app-muted)">Set once at intake, before you saw the job. Log what it really took in Time Reports instead.</span></div>
         </div>
       </div>
     </div>
@@ -605,6 +766,7 @@ footer{max-width:var(--maxw);color:var(--muted);font-size:13.4px;padding-top:8px
     <li>The brief is at the top of the job. <span class="f">Revision brief</span>, further down, is what to change this round.</li>
     <li><span class="st" style="--c:var(--s-editing)">EDITING</span> when you start. <span class="st" style="--c:var(--s-internal)">INTERNAL REVIEW</span> when it is ready. Those are your only two status changes.</li>
     <li>Revisions arrive as a numbered ticket. Read it, do it, set the ticket to ROUND DONE. The job sends itself back.</li>
+    <li>Log your hours in <span class="f">Time Reports</span> on the job before you stop for the day. Roughly right is right enough.</li>
     <li>Where the files go on Drive is the <strong>Filing system guide</strong>, not this page.</li>
   </ol>
 
